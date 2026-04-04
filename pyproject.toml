@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "skills-health-guardian"
+version = "0.1.0"
+description = "Skills Environment Health Guardian — 自动巡检所有 Agent Skills 的运行环境依赖、版本冲突和配置状态"
+readme = "SKILL.md"
+license = {text = "MIT"}
+authors = [
+    {name = "WorkBuddy Team"}
+]
+requires-python = ">=3.9"
+dependencies = [
+    "rich>=13.0",
+]
+
+[project.scripts]
+health-check = "scripts/health-check.sh"
+
+[project.urls]
+Homepage = "https://github.com/workbuddy/skills-health-guardian"
+Repository = "https://github.com/workbuddy/skills-health-guardian"
+
+[tool.setuptools.packages.find]
+include = ["scripts*"]
+
+[tool.setuptools.package-data]
+scripts = ["*.sh"]
