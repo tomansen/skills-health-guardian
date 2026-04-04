@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!--
+    SHG — 仪表盘图标 (Dashboard)
+    用途: 导航入口、总览页面、数据看板
+    设计: 组合图表 + 数据可视化元素
+  -->
+  <defs>
+    <linearGradient id="dash-accent" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- 背景卡片圆角 -->
+  <rect x="3" y="4" width="42" height="40" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+  
+  <!-- 标题栏装饰条 -->
+  <rect x="3" y="4" width="42" height="8" rx="6" fill="#21262d"/>
+  <rect x="3" y="8" width="42" height="4" fill="#21262d"/>
+  <!-- 窗口按钮（装饰） -->
+  <circle cx="9" cy="8" r="1.5" fill="#ef4444" opacity="0.7"/>
+  <circle cx="14" cy="8" r="1.5" fill="#f59e0b" opacity="0.7"/>
+  <circle cx="19" cy="8" r="1.5" fill="#22c55e" opacity="0.7"/>
+  
+  <!-- 柱状图区域 -->
+  <rect x="8" y="18" width="6" height="14" rx="1.5" fill="#22c55e" opacity="0.9"/>
+  <rect x="17" y="24" width="6" height="8" rx="1.5" fill="#06b6d4" opacity="0.9"/>
+  <rect x="26" y="20" width="6" height="12" rx="1.5" fill="#6366f1" opacity="0.9"/>
+  <rect x="35" y="27" width="5" height="5" rx="1.2" fill="#f59e0b" opacity="0.9"/>
+  
+  <!-- 趋势线（覆盖在柱状图上） -->
+  <path
+    d="M9 16 L20 22 L29 18 L38 25"
+    fill="none"
+    stroke="url(#dash-accent)"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  
+  <!-- 趋势线上的点 -->
+  <circle cx="9" cy="16" r="1.8" fill="#e6edf3"/>
+  <circle cx="20" cy="22" r="1.8" fill="#e6edf3"/>
+  <circle cx="29" cy="18" r="1.8" fill="#e6edf3"/>
+  <circle cx="38" cy="25" r="1.8" fill="#e6edf3"/>
+</svg>

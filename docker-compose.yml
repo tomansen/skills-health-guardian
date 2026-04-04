@@ -1,0 +1,114 @@
+# ============================================================
+#  Skills Health Guardian - Docker Compose
+#  三种运行模式：CLI 扫描 / MCP Server / Web Dashboard
+# ============================================================
+
+services:
+
+  # ─────────────────────────────────────────────
+  #  模式 1: CLI 扫描（一次性运行）
+  #  用法: docker compose --profile cli run shg-cli
+  # ─────────────────────────────────────────────
+  shg-cli:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: shg:latest
+    profiles: ["cli"]
+    volumes:
+      # 只读挂载 skills 目录（宿主机 → 容器）
+      - ${SKILLS_PATH:-~/.workbuddy/skills}:/skills:ro
+      # 报告输出目录（双向映射）
+      - ${REPORT_DIR:-./reports}:/app/reports
+    environment:
+      - SKILLS_PATH=/skills
+      - REPORT_DIR=/app/reports
+    # 默认：完整扫描 + 表格输出
+    command: ["python3", "scripts/scanner.py", "--path", "/skills"]
+    # CLI 模式不自动重启
+    restart: "no"
+
+  # ─────────────────────────────────────────────
+  #  模式 2: MCP Server（长驻服务，stdio 模式）
+  #  用法: docker compose --profile mcp up shg-mcp
+  #  注意: stdio 模式需要 stdin 保持打开
+  # ─────────────────────────────────────────────
+  shg-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: shg:latest
+    profiles: ["mcp"]
+    volumes:
+      - ${SKILLS_PATH:-~/.workbuddy/skills}:/skills:ro
+      - ${REPORT_DIR:-./reports}:/app/reports
+    environment:
+      - SKILLS_PATH=/skills
+      - REPORT_DIR=/app/reports
+    # MCP Server 启动命令（预留接口 — 待 server.py 就绪后替换）
+    command: ["python3", "-c", "print('MCP Server mode coming soon. Use --profile cli for scanning.')"]
+    stdin_open: true   # -i: 保持 stdin 打开（stdio 模式必须）
+    tty: true          # -t: 分配终端
+    restart: unless-stopped
+
+  # ─────────────────────────────────────────────
+  #  模式 3: Web Dashboard（HTTP 报告浏览服务）
+  #  用法: docker compose --profile web up shg-web --build
+  #  访问: http://localhost:8080
+  # ─────────────────────────────────────────────
+  shg-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: shg:latest
+    profiles: ["web"]
+    volumes:
+      - ${SKILLS_PATH:-~/.workbuddy/skills}:/skills:ro
+      - ${REPORT_DIR:-./reports}:/app/reports
+    ports:
+      - "${WEB_PORT:-8080}:8080"
+    environment:
+      - SKILLS_PATH=/skills
+      - REPORT_DIR=/app/reports
+    # 先执行扫描生成报告，再启动 HTTP 服务展示
+    command: >
+      bash -c "
+        python3 scripts/scanner.py --path /skills --output /app/reports/scan-result.json &&
+        python3 scripts/reporter.py --path /skills --output-dir /app/reports --format html -o index.html &&
+        cd /app/reports && python3 -m http.server 8080
+      "
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # ─────────────────────────────────────────────
+  #  模式 4: 定时巡检（Cron 模式，可选）
+  #  用法: docker compose --profile cron up -d shg-cron
+  #  每 6 小时扫描一次并输出报告到 reports/
+  # ─────────────────────────────────────────────
+  shg-cron:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: shg:latest
+    profiles: ["cron"]
+    volumes:
+      - ${SKILLS_PATH:-~/.workbuddy/skills}:/skills:ro
+      - ${REPORT_DIR:-./reports}:/app/reports
+    environment:
+      - SKILLS_PATH=/skills
+      - REPORT_DIR=/app/reports
+      - CRON_SCHEDULE=${CRON_SCHEDULE:-*/6 * * * *}
+    # 安装 cron 并设置定时任务
+    entrypoint: >
+      bash -c '
+        apt-get update && apt-get install -y --no-install-recommends cron > /dev/null 2>&1 &&
+        echo "$${CRON_SCHEDULE} cd /app && python3 scripts/scanner.py --path $${SKILLS_PATH} --output $${REPORT_DIR}/scan-\$$(date +\%\Y\%m\%d_\%H\%M\%S).json" | crontab - &&
+        echo "📅 Cron scheduler started (schedule: $$CRON_SCHEDULE)" &&
+        service cron start &&
+        tail -f /var/log/syslog 2>/dev/null || sleep infinity
+      '
+    restart: unless-stopped

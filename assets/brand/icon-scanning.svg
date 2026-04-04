@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!--
+    SHG — 扫描中图标 (Scanning)
+    用途: 正在执行扫描、加载中、检测进行中
+    设计: 雷达扫描 + 放大镜 + 动态旋转效果
+  -->
+  <defs>
+    <linearGradient id="scan-sweep" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#06b6d4" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- 外圈虚线（雷达环） -->
+  <circle cx="24" cy="24" r="21" stroke="#30363d" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+  <circle cx="24" cy="24" r="14" stroke="#30363d" stroke-width="1" stroke-dasharray="2 3" fill="none"/>
+  
+  <!-- 扫描扇形 — 旋转动画 -->
+  <path
+    d="M24 24 L24 3 A21 21 0 0 1 42.5 13.5 Z"
+    fill="url(#scan-sweep)">
+    <animateTransform
+      attributeName="transform"
+      type="rotate"
+      from="0 24 24"
+      to="360 24 24"
+      dur="2s"
+      repeatCount="indefinite"
+    />
+  </path>
+  
+  <!-- 中心点 + 放大镜核心 -->
+  <circle cx="24" cy="24" r="5" fill="none" stroke="#06b6d4" stroke-width="2"/>
+  <circle cx="24" cy="24" r="2" fill="#6366f1">
+    <animate attributeName="r" values="2;3;2" dur="1s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- 扫描线末端点 -->
+  <circle cx="24" cy="3" r="1.5" fill="#6366f1">
+    <animateTransform
+      attributeName="transform"
+      type="rotate"
+      from="0 24 24"
+      to="360 24 24"
+      dur="2s"
+      repeatCount="indefinite"
+    />
+  </circle>
+</svg>

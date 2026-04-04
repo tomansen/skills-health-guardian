@@ -1,0 +1,75 @@
+# ============================================================
+#  Skills Health Guardian - Docker 构建排除规则
+#  排除不需要进入镜像的文件，减小构建上下文
+# ============================================================
+
+# 版本控制
+.git
+.gitignore
+.github
+
+# 团队内部数据（绝不能进入镜像！）
+.shg-team
+
+# Python 缓存/编译
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+dist/
+build/
+.eggs/
+
+# 虚拟环境
+.venv
+venv
+env/
+
+# 环境变量 / 密钥
+.env
+.env.*
+!.env.example
+
+# IDE / 编辑器
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# 报告输出（运行时生成）
+reports/
+*.html
+!scripts/*.html
+
+# 测试（Docker 运行时不需要）
+tests/
+.pytest_cache
+.coverage
+htmlcov/
+.tox
+
+# 文档（保留 SKILL.md 和 README）
+docs/
+*.md
+!SKILL.md
+!README.md
+!LICENSE
+
+# Docker 自身
+.dockerignore
+docker-compose.yml
+Dockerfile*
+docker/
+
+# macOS 系统文件
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# 日志
+*.log
+logs/
+
+# OpenSpace 配置（如有）
+.upload_meta.json

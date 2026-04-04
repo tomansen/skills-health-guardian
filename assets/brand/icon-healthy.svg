@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!--
+    SHG — 健康状态图标 (Healthy)
+    用途: 扫描通过、状态正常、所有依赖就绪
+    设计: 圆形徽章 + 对勾 + 脉冲光环
+  -->
+  <defs>
+    <linearGradient id="healthy-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#16a34a" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- 外圈光晕 -->
+  <circle cx="24" cy="24" r="23" fill="url(#healthy-glow)"/>
+  
+  <!-- 主圆背景 -->
+  <circle cx="24" cy="24" r="20" fill="#22c55e"/>
+  
+  <!-- 对勾 -->
+  <path
+    d="M14 24.5 L20.5 31 L34 17"
+    stroke="#ffffff"
+    stroke-width="3.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+  
+  <!-- 装饰性小点（代表检测项） -->
+  <circle cx="24" cy="6" r="1.5" fill="#22c55e" opacity="0.8">
+    <animate attributeName="r" values="1.5;2;1.5" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="38" cy="14" r="1" fill="#22c55e" opacity="0.5"/>
+  <circle cx="38" cy="34" r="1" fill="#22c55e" opacity="0.5"/>
+</svg>

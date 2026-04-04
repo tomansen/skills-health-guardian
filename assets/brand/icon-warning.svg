@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!--
+    SHG — 警告状态图标 (Warning)
+    用途: 依赖版本冲突、部分配置缺失、非阻塞问题
+    设计: 三角形 + 感叹号 + 脉冲效果
+  -->
+  <defs>
+    <linearGradient id="warn-glow" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- 光晕 -->
+  <path d="M24 2 L46 42 L2 Z" fill="url(#warn-glow)"/>
+  
+  <!-- 主三角形背景 -->
+  <path
+    d="M24 6 L43 40 L5 40 Z"
+    fill="#f59e0b"
+    stroke-linejoin="round"
+  />
+  
+  <!-- 感叹号 -->
+  <rect x="22" y="14" width="4" height="14" rx="2" fill="#ffffff"/>
+  <circle cx="24" cy="34" r="3" fill="#ffffff"/>
+  
+  <!-- 脉冲边框动画提示 -->
+  <path
+    d="M24 4 L45 41 L3 41 Z"
+    fill="none"
+    stroke="#f59e0b"
+    stroke-width="1"
+    opacity="0.5">
+    <animate attributeName="opacity" values="0.5;0.15;0.5" dur="1.8s" repeatCount="indefinite"/>
+  </path>
+</svg>

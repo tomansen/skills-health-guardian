@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 96" fill="none">
+  <!--
+    Skills Health Guardian — 横版 Logo（图标 + 文字）
+    用于: 文档页头、导航栏、邮件签名等横向空间充足的场景
+  -->
+  <defs>
+    <linearGradient id="hg-primary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <linearGradient id="hg-pulse" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="50%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- 图标区域 (48x48) -->
+  <g transform="translate(8, 24)">
+    <!-- 图标背景圆 -->
+    <rect x="0" y="0" width="48" height="48" rx="12" fill="#0d1117"/>
+    
+    <!-- 外圈 S 形盾牌 -->
+    <path
+      d="M24 7 C33.5 7 41.5 11.8 44 18.5 C45.9 23.6 44.6 29.6 40.4 34.8 C36.2 40 30 43 24 43.5 C18 43 11.8 40 7.6 34.8 C3.4 29.6 2.1 23.6 4 18.5 C6.5 11.8 14.5 7 24 7Z"
+      fill="none"
+      stroke="url(#hg-primary)"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    
+    <!-- S 脉冲波 -->
+    <path
+      d="M13 25 L18.5 25 L21.5 15 L25 36 L28.5 19 L31 29 L34.5 25 L37 25"
+      fill="none"
+      stroke="url(#hg-pulse)"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    
+    <!-- 脉冲点 -->
+    <circle cx="25" cy="36" r="2.5" fill="#22c55e"/>
+  </g>
+  
+  <!-- 文字区域 -->
+  <g transform="translate(68, 14)">
+    <!-- 主标题 "SHG" -->
+    <text x="0" y="32" font-family="'Inter', -apple-system, BlinkMacSystemFont, sans-serif" font-size="32" font-weight="700" fill="#e6edf3" letter-spacing="-0.5">
+      SHG
+    </text>
+    <!-- 副标题 "Skills Health Guardian" -->
+    <text x="0" y="56" font-family="'Inter', -apple-system, BlinkMacSystemFont, sans-serif" font-size="14" font-weight="400" fill="#8b949e" letter-spacing="0.3">
+      Skills Health Guardian
+    </text>
+  </g>
+  
+  <!-- 右侧状态指示点（装饰） -->
+  <circle cx="320" cy="48" r="4" fill="#22c55e">
+    <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+</svg>

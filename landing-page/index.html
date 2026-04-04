@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skills Health Guardian — Keep Your AI Skills Healthy</title>
+  <meta name="description" content="The open-source health monitor for AI agent skills, plugins, and MCP tools. Scan, diagnose, and fix issues automatically.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================
+       Design Tokens & Reset
+       ============================================ */
+    :root {
+      --color-bg: #0a0a0f;
+      --color-bg-secondary: #12121a;
+      --color-card: #1a1a2e;
+      --color-card-hover: #222240;
+      --color-border: #2a2a3e;
+      --color-border-light: #353550;
+      --color-text: #e4e4e7;
+      --color-text-muted: #71717a;
+      --color-text-dim: #52525b;
+      --color-primary: #6366f1;
+      --color-primary-light: #818cf8;
+      --color-primary-glow: rgba(99, 102, 241, 0.25);
+      --color-primary-strong: rgba(99, 102, 241, 0.4);
+      --color-success: #22c55e;
+      --color-success-dim: rgba(34, 197, 94, 0.15);
+      --color-warning: #f59e0b;
+      --color-warning-dim: rgba(245, 158, 11, 0.15);
+      --color-danger: #ef4444;
+      --color-danger-dim: rgba(239, 68, 68, 0.15);
+      --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --radius: 12px;
+      --radius-lg: 16px;
+      --radius-sm: 8px;
+      --max-width: 1100px;
+      --nav-height: 64px;
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--nav-height);
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a { color: var(--color-primary-light); text-decoration: none; transition: color var(--transition); }
+    a:hover { color: #a5b4fc; }
+    
+    img, svg { display: block; max-width: 100%; }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ============================================
+       Navigation
+       ============================================ */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      background: rgba(10, 10, 15, 0.8);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid transparent;
+      transition: all var(--transition);
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
+    .nav.visible {
+      transform: translateY(0);
+      opacity: 1;
+      border-bottom-color: var(--color-border);
+    }
+
+    .nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--color-text);
+    }
+
+    .nav-logo svg { width: 28px; height: 28px; }
+    .nav-logo span { color: var(--color-primary-light); }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      transition: color var(--transition);
+    }
+
+    .nav-links a:hover { color: var(--color-text); }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      color: #fff;
+      background: var(--color-primary);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-decoration: none;
+    }
+
+    .nav-cta:hover {
+      background: #5855eb;
+      box-shadow: 0 4px 20px var(--color-primary-glow);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    /* ============================================
+       Section Base
+       ============================================ */
+    section {
+      position: relative;
+      padding: 100px 0;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    section.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-primary-light);
+      margin-bottom: 14px;
+      font-family: var(--font-sans);
+    }
+
+    .section-title {
+      font-size: clamp(32px, 5vw, 44px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+    }
+
+    .section-desc {
+      font-size: 17px;
+      color: var(--color-text-muted);
+      max-width: 580px;
+      line-height: 1.7;
+    }
+
+    /* ============================================
+       Hero Section
+       ============================================ */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 0;
+      opacity: 1;
+      transform: none;
+      overflow: hidden;
+    }
+
+    .hero-grid-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(99, 102, 241, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    }
+
+    .hero-glow-orb {
+      position: absolute;
+      width: 650px;
+      height: 650px;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      animation: orbFloat 10s ease-in-out infinite alternate;
+    }
+
+    .hero-glow-orb.primary {
+      top: -200px;
+      right: -150px;
+      background: radial-gradient(circle, rgba(99,102,241,0.22), transparent 70%);
+    }
+
+    .hero-glow-orb.secondary {
+      bottom: -250px;
+      left: -200px;
+      background: radial-gradient(circle, rgba(34,197,94,0.08), transparent 70%);
+      animation-delay: -5s;
+    }
+
+    @keyframes orbFloat {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(30px, -20px) scale(1.08); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-primary-light);
+      background: var(--color-primary-glow);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      border-radius: 50px;
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s ease forwards 0.15s;
+    }
+
+    .hero-badge .dot {
+      width: 7px;
+      height: 7px;
+      background: var(--color-success);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero-title {
+      font-size: clamp(42px, 7vw, 72px);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -0.04em;
+      margin-bottom: 22px;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.7s ease forwards 0.3s;
+    }
+
+    .hero-title .gradient-text {
+      background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #22c55e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(17px, 2.5vw, 21px);
+      color: var(--color-text-muted);
+      max-width: 520px;
+      margin-bottom: 14px;
+      font-weight: 400;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s ease forwards 0.45s;
+    }
+
+    .hero-subtitle-zh {
+      font-size: 15px;
+      color: var(--color-text-dim);
+      margin-bottom: 38px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s ease forwards 0.55s;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s ease forwards 0.65s;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 14px 28px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      white-space: nowrap;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: #fff;
+      box-shadow: 0 0 0 0 var(--color-primary-glow);
+    }
+
+    .btn-primary:hover {
+      background: #5558eb;
+      box-shadow: 0 6px 30px var(--color-primary-glow), 0 0 60px var(--color-primary-strong);
+      transform: translateY(-2px);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: var(--color-card);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--color-card-hover);
+      border-color: var(--color-border-light);
+      transform: translateY(-2px);
+      color: var(--color-text);
+    }
+
+    /* Health Dashboard Visual */
+    .hero-visual {
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(30px) scale(0.97);
+      animation: visualEnter 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.8s;
+    }
+
+    @keyframes visualEnter {
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .dashboard-card {
+      background: linear-gradient(145deg, rgba(26, 26, 46, 0.85), rgba(18, 18, 26, 0.95));
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      backdrop-filter: blur(12px);
+      box-shadow:
+        0 4px 40px rgba(0, 0, 0, 0.4),
+        0 0 80px var(--color-primary-glow),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .dashboard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .dashboard-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dashboard-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-warning);
+      animation: blink 1.5s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .score-ring-container {
+      position: relative;
+      width: 170px;
+      height: 170px;
+      margin: 0 auto 24px;
+    }
+
+    .score-ring-svg { transform: rotate(-90deg); }
+
+    .score-ring-bg {
+      fill: none;
+      stroke: var(--color-border);
+      stroke-width: 10;
+    }
+
+    .score-ring-progress {
+      fill: none;
+      stroke: url(#scoreGradient);
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-dasharray: 471;
+      stroke-dashoffset: 471;
+      transition: stroke-dashoffset 2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .score-value {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .score-number {
+      font-size: 42px;
+      font-weight: 800;
+      font-family: var(--font-sans);
+      line-height: 1;
+    }
+
+    .score-number.warning { color: var(--color-warning); }
+
+    .score-label {
+      font-size: 11px;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 4px;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 14px 8px;
+      background: rgba(255,255,255,0.02);
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      transition: all var(--transition);
+    }
+
+    .stat-item:hover {
+      border-color: var(--color-border);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .stat-icon { font-size: 18px; margin-bottom: 6px; }
+    .stat-val { font-size: 20px; font-weight: 700; font-family: var(--font-sans); }
+    .stat-key { font-size: 11px; color: var(--color-text-muted); margin-top: 2px; }
+
+    .text-success { color: var(--color-success); }
+    .text-warning { color: var(--color-warning); }
+    .text-danger { color: var(--color-danger); }
+
+    /* Hero Layout */
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    /* ============================================
+       Features Section
+       ============================================ */
+    #features { padding: 120px 0; }
+
+    .features-header { text-align: center; margin-bottom: 56px; }
+    .features-header .section-desc { margin: 0 auto; }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .feature-card {
+      position: relative;
+      background: linear-gradient(160deg, var(--color-card), rgba(26,26,46,0.5));
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 34px 28px;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), var(--color-primary-glow), transparent 40%);
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(99, 102, 241, 0.35);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), 0 0 50px var(--color-primary-glow);
+    }
+
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      background: var(--color-primary-glow);
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .feature-title {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .feature-desc {
+      font-size: 14.5px;
+      color: var(--color-text-muted);
+      line-height: 1.65;
+    }
+
+    /* ============================================
+       How It Works
+       ============================================ */
+    #how-it-works { padding: 100px 0; }
+
+    .how-header { text-align: center; margin-bottom: 64px; }
+    .how-header .section-desc { margin: 0 auto; }
+
+    .steps-container {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      position: relative;
+    }
+
+    .step-card {
+      flex: 1;
+      position: relative;
+      text-align: center;
+      padding: 36px 24px;
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      transition: all var(--transition);
+      z-index: 1;
+    }
+
+    .step-card:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      font-size: 18px;
+      font-weight: 700;
+      font-family: var(--font-sans);
+      color: var(--color-primary-light);
+      background: var(--color-primary-glow);
+      border: 2px solid var(--color-primary);
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+
+    .step-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .step-desc {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    .step-code {
+      margin-top: 16px;
+      padding: 10px 14px;
+      background: rgba(0,0,0,0.35);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--color-success);
+      text-align: left;
+    }
+
+    /* Arrow connectors */
+    .step-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      flex-shrink: 0;
+      z-index: 2;
+    }
+
+    .step-arrow svg {
+      width: 28px;
+      height: 28px;
+      color: var(--color-primary);
+      opacity: 0.5;
+      transition: opacity var(--transition);
+    }
+
+    .steps-container:hover .step-arrow svg { opacity: 0.9; }
+
+    /* ============================================
+       Live Demo / Terminal
+       ============================================ */
+    #demo { padding: 100px 0; }
+
+    .demo-header { text-align: center; margin-bottom: 48px; }
+    .demo-header .section-desc { margin: 0 auto; }
+
+    .terminal-window {
+      background: #0d0d14;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow:
+        0 8px 48px rgba(0,0,0,0.5),
+        0 0 80px rgba(99, 102, 241, 0.05);
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 18px;
+      background: #14141f;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot-red { background: #ff5f57; }
+    .dot-yellow { background: #febc2e; }
+    .dot-green { background: #28c840; }
+
+    .terminal-bar-name {
+      flex: 1;
+      text-align: center;
+      font-size: 12px;
+      color: var(--color-text-dim);
+      font-family: var(--font-mono);
+    }
+
+    .terminal-body {
+      padding: 24px 28px;
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      line-height: 1.75;
+      min-height: 380px;
+      overflow-x: auto;
+    }
+
+    .t-prompt { color: var(--color-success); }
+    .t-cmd { color: var(--color-text); }
+    .t-output { color: var(--color-text-muted); }
+    .t-progress { color: var(--color-primary-light); }
+
+    .report-box {
+      border: 1px solid var(--color-border-light);
+      border-radius: 6px;
+      padding: 16px 18px;
+      margin: 14px 0;
+      background: rgba(26, 26, 46, 0.5);
+    }
+
+    .report-title {
+      color: var(--color-warning);
+      font-weight: 600;
+    }
+
+    .report-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px dashed rgba(255,255,255,0.06);
+    }
+
+    .report-row:last-child { border-bottom: none; }
+    .report-label { color: var(--color-text-muted); }
+    .report-value { font-weight: 600; }
+
+    .issue-item {
+      padding: 4px 0;
+      color: var(--color-text-muted);
+    }
+
+    .typing-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 17px;
+      background: var(--color-primary-light);
+      vertical-align: text-bottom;
+      animation: cursorBlink 0.9s step-end infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes cursorBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Typewriter lines hidden initially */
+    .tw-line { opacity: 0; white-space: pre; display: block; }
+    .tw-line.visible { opacity: 1; transition: opacity 0.03s; }
+
+    /* ============================================
+       Tech Stack
+       ============================================ */
+    #tech-stack { padding: 100px 0; }
+
+    .tech-header { text-align: center; margin-bottom: 52px; }
+    .tech-header .section-desc { margin: 0 auto; }
+
+    .tech-badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .tech-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text);
+      transition: all var(--transition);
+    }
+
+    .tech-badge:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+    }
+
+    .tech-badge svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .badge-python { color: #3776ab; }
+    .badge-bash { color: #4eaa25; }
+    .badge-mcp { color: var(--color-primary-light); }
+    .badge-zero { color: var(--color-success); }
+    .badge-ci { color: #ff6b35; }
+    .badge-mit { color: #a0aec0; }
+
+    /* ============================================
+       Quick Start
+       ============================================ */
+    #quick-start { padding: 100px 0; }
+
+    .qs-header { text-align: center; margin-bottom: 52px; }
+    .qs-header .section-desc { margin: 0 auto; }
+
+    .steps-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .qs-card {
+      position: relative;
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all var(--transition);
+    }
+
+    .qs-card:hover {
+      border-color: var(--color-border-light);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .qs-step-label {
+      display: inline-block;
+      padding: 5px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-primary-light);
+      background: var(--color-primary-glow);
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+
+    .qs-card-header { padding: 24px 24px 0; }
+    .qs-card-title { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .qs-card-desc { font-size: 13.5px; color: var(--color-text-muted); margin-bottom: 18px; }
+
+    .qs-code-block {
+      background: #08080e;
+      padding: 18px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      line-height: 1.65;
+      color: var(--color-text-muted);
+      overflow-x: auto;
+      white-space: pre;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .code-comment { color: var(--color-text-dim); }
+    .code-string { color: var(--color-success); }
+
+    /* ============================================
+       Open Source
+       ============================================ */
+    #opensource { padding: 100px 0; }
+
+    .os-header { text-align: center; margin-bottom: 52px; }
+    .os-header .section-desc { margin: 0 auto; }
+
+    .os-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 44px;
+    }
+
+    .os-stat {
+      text-align: center;
+    }
+
+    .os-stat-val {
+      font-size: 40px;
+      font-weight: 800;
+      color: var(--color-text);
+      line-height: 1;
+    }
+
+    .os-stat-key {
+      font-size: 13px;
+      color: var(--color-text-muted);
+      margin-top: 6px;
+    }
+
+    .os-info {
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .os-info p {
+      font-size: 16px;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .os-actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .mit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      margin-top: 24px;
+    }
+
+    /* ============================================
+       Footer
+       ============================================ */
+    footer {
+      border-top: 1px solid var(--color-border);
+      padding: 44px 0;
+      background: var(--color-bg-secondary);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-left { display: flex; flex-direction: column; gap: 6px; }
+    .footer-brand { font-weight: 700; font-size: 15px; }
+    .footer-brand span { color: var(--color-primary-light); }
+    .footer-copy { font-size: 13px; color: var(--color-text-dim); }
+    .footer-heart { color: var(--color-danger); }
+
+    .footer-nav {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .footer-nav a {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      transition: color var(--transition);
+    }
+
+    .footer-nav a:hover { color: var(--color-text); }
+
+    .footer-made {
+      font-size: 13px;
+      color: var(--color-text-dim);
+      text-align: center;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--color-border);
+    }
+
+    /* ============================================
+       Responsive
+       ============================================ */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero-visual { order: -1; }
+      .hero-visual .dashboard-card { max-width: 480px; margin: 0 auto; }
+      .hero-content { text-align: center; }
+      .hero-subtitle { margin-left: auto; margin-right: auto; }
+      .hero-subtitle-zh { margin-left: auto; margin-right: auto; }
+      .hero-ctas { justify-content: center; }
+
+      .features-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+
+      .steps-container { flex-direction: column; }
+      .step-arrow { 
+        width: 100%; 
+        height: 40px; 
+        transform: rotate(90deg); 
+      }
+      
+      .steps-cards { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 70px 0; }
+      .section-title { font-size: 28px; }
+      .hero-title { font-size: 36px; }
+
+      .nav-links { display: none; }
+
+      .os-stats { gap: 24px; }
+      .os-stat-val { font-size: 30px; }
+
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-nav { flex-wrap: wrap; justify-content: center; }
+
+      .score-ring-container { width: 140px; height: 140px; }
+      .score-number { font-size: 34px; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+      .hero-title { font-size: 30px; }
+      .hero-ctas { flex-direction: column; align-items: stretch; }
+      .btn { justify-content: center; padding: 13px 20px; }
+      .tech-badges { gap: 10px; }
+      .tech-badge { padding: 11px 18px; font-size: 13px; }
+      .terminal-body { padding: 16px; font-size: 12px; }
+      .stat-row { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== NAVIGATION ========== -->
+  <nav class="nav" id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="#hero" class="nav-logo" aria-label="SHG Home">
+        <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="#6366f1" stroke-width="2"/><path d="M14 7v7l4 3" stroke="#818cf8" stroke-width="2" stroke-linecap="round"/><circle cx="14" cy="14" r="3" fill="#22c55e"/></svg>
+        SHG<span>.</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#demo">Demo</a></li>
+        <li><a href="#quick-start">Quick Start</a></li>
+        <li><a href="#opensource">Open Source</a></li>
+      </ul>
+      <a href="https://github.com/tomansen/skills-health-guardian" target="_blank" rel="noopener noreferrer" class="nav-cta">
+        ⭐ GitHub
+      </a>
+    </div>
+  </nav>
+
+  <!-- ========== HERO SECTION ========== -->
+  <section id="hero" aria-label="Hero">
+    <div class="hero-grid-pattern"></div>
+    <div class="hero-glow-orb primary"></div>
+    <div class="hero-glow-orb secondary"></div>
+
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          Open Source · v1.0.0 · MIT License
+        </div>
+
+        <h1 class="hero-title">
+          Keep Your AI<br>
+          <span class="gradient-text">Skills Healthy</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          The open-source health monitor for AI agent skills, plugins, and MCP tools.
+        </p>
+        <p class="hero-subtitle-zh">
+          你的 AI 助手技能环境的全科医生 🏥
+        </p>
+
+        <div class="hero-ctas">
+          <a href="#quick-start" class="btn btn-primary">
+            🚀 Get Started
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m-4-4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="https://github.com/tomansen/skills-health-guardian" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+            ⭐ Star on GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- Dashboard Visual -->
+      <div class="hero-visual">
+        <div class="dashboard-card">
+          <div class="dashboard-header">
+            <span class="dashboard-title">
+              <span class="dashboard-status-dot"></span>
+              Live Health Status
+            </span>
+          </div>
+
+          <div class="score-ring-container">
+            <svg class="score-ring-svg" viewBox="0 0 160 160" width="100%" height="100%">
+              <defs>
+                <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#f59e0b"/>
+                  <stop offset="100%" stop-color="#22c55e"/>
+                </linearGradient>
+              </defs>
+              <circle cx="80" cy="80" r="75" class="score-ring-bg"/>
+              <circle cx="80" cy="80" r="75" class="score-ring-progress" id="scoreRing"/>
+            </svg>
+            <div class="score-value">
+              <span class="score-number warning" id="scoreNumber">0</span>
+              <span class="score-label">Health Score</span>
+            </div>
+          </div>
+
+          <div class="stat-row">
+            <div class="stat-item">
+              <div class="stat-icon text-success">✅</div>
+              <div class="stat-val text-success" id="statHealthy">0</div>
+              <div class="stat-key">Healthy</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon text-warning">⚠️</div>
+              <div class="stat-val text-warning" id="statWarning">0</div>
+              <div class="stat-key">Warning</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon text-danger">🔴</div>
+              <div class="stat-val text-danger" id="statAtRisk">0</div>
+              <div class="stat-key">At Risk</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FEATURES SECTION ========== -->
+  <section id="features" aria-label="Features">
+    <div class="container">
+      <div class="features-header">
+        <span class="section-label">Features</span>
+        <h2 class="section-title">Everything you need to keep skills healthy</h2>
+        <p class="section-desc">
+          A comprehensive toolkit for monitoring, diagnosing, and fixing your AI agent skill environment — all in one place.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h3 class="feature-title">Comprehensive Scanning</h3>
+          <p class="feature-desc">
+            Scans dependency conflicts, runtime issues, and configuration problems across all your skills in seconds.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3 class="feature-title">Health Scoring</h3>
+          <p class="feature-desc">
+            0–100 score with clear pass/warning/fail thresholds for every skill. Know exactly what needs attention.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3 class="feature-title">Auto-Fix</h3>
+          <p class="feature-desc">
+            One-click fix for common issues: missing dependencies, broken paths, missing env templates, and more.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📈</div>
+          <h3 class="feature-title">Trend Tracking</h3>
+          <p class="feature-desc">
+            Monitor health changes over time with snapshot history. Catch regressions before they become problems.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== HOW IT WORKS ========== -->
+  <section id="how-it-works" aria-label="How It Works">
+    <div class="container">
+      <div class="how-header">
+        <span class="section-label">How It Works</span>
+        <h2 class="section-title">Three steps to healthier skills</h2>
+        <p class="section-desc">
+          From scanning to fixing — get your entire skill environment under control in minutes.
+        </p>
+      </div>
+
+      <div class="steps-container">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3 class="step-title">Scan</h3>
+          <p class="step-desc">Run one command to scan all skills in your workspace.</p>
+          <div class="step-code">$ shg scan --all</div>
+        </div>
+
+        <div class="step-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14m-4-4l4 4-4 4"/>
+          </svg>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3 class="step-title">Diagnose</h3>
+          <p class="step-desc">Get a detailed report with scores and issue breakdown.</p>
+          <div class="step-code">$ shg report</div>
+        </div>
+
+        <div class="step-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14m-4-4l4 4-4 4"/>
+          </svg>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3 class="step-title">Fix</h3>
+          <p class="step-desc">Apply suggested fixes or run auto-fix with one command.</p>
+          <div class="step-code">$ shg fix</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== LIVE DEMO ========== -->
+  <section id="demo" aria-label="Live Demo">
+    <div class="container">
+      <div class="demo-header">
+        <span class="section-label">Live Demo</span>
+        <h2 class="section-title">See it in action</h2>
+        <p class="section-desc">
+          Watch SHG scan a real skill directory and generate a health report — live in your browser.
+        </p>
+      </div>
+
+      <div class="terminal-window" id="terminalWindow">
+        <div class="terminal-bar">
+          <div class="terminal-dot dot-red"></div>
+          <div class="terminal-dot dot-yellow"></div>
+          <div class="terminal-dot dot-green"></div>
+          <span class="terminal-bar-name">shg-terminal</span>
+        </div>
+        <div class="terminal-body" id="terminalBody">
+          <!-- Lines injected by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TECH STACK ========== -->
+  <section id="tech-stack" aria-label="Tech Stack">
+    <div class="container">
+      <div class="tech-header">
+        <span class="section-label">Tech Stack</span>
+        <h2 class="section-title">Built for reliability & simplicity</h2>
+        <p class="section-desc">
+          Minimal dependencies, maximum compatibility. SHG runs everywhere Python or Bash is available.
+        </p>
+      </div>
+
+      <div class="tech-badges">
+        <div class="tech-badge badge-python">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+          Python 3.10+
+        </div>
+        <div class="tech-badge badge-bash">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          Shell Script
+        </div>
+        <div class="tech-badge badge-mcp">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          MCP Compatible
+        </div>
+        <div class="tech-badge badge-zero">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Zero Deps (Core)
+        </div>
+        <div class="tech-badge badge-ci">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          GitHub Actions CI/CD
+        </div>
+        <div class="tech-badge badge-mit">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          MIT Licensed
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== QUICK START ========== -->
+  <section id="quick-start" aria-label="Quick Start">
+    <div class="container">
+      <div class="qs-header">
+        <span class="section-label">Quick Start</span>
+        <h2 class="section-title">Up and running in 3 steps</h2>
+        <p class="section-desc">
+          No complex setup required. Clone, scan, and view your first health report in under a minute.
+        </p>
+      </div>
+
+      <div class="steps-cards">
+        <div class="qs-card">
+          <div class="qs-card-header">
+            <span class="qs-step-label">Step 1</span>
+            <h3 class="qs-card-title">Clone the repository</h3>
+            <p class="qs-card-desc">Get the source code from GitHub.</p>
+          </div>
+          <div class="qs-code-block"><span class="code-comment"># Clone the repo</span>
+git clone https://github.com/tomansen/skills-health-guardian.git
+cd skills-health-guardian</div>
+        </div>
+
+        <div class="qs-card">
+          <div class="qs-card-header">
+            <span class="qs-step-label">Step 2</span>
+            <h3 class="qs-card-title">Run your first scan</h3>
+            <p class="qs-card-desc">Scan your skills directory instantly.</p>
+          </div>
+          <div class="qs-code-block"><span class="code-comment"># Run health check</span>
+bash scripts/health-check.sh
+
+<span class="code-comment"># Or use Python scanner</span>
+python scripts/scanner.py</div>
+        </div>
+
+        <div class="qs-card">
+          <div class="qs-card-header">
+            <span class="qs-step-label">Step 3</span>
+            <h3 class="qs-card-title">View the report</h3>
+            <p class="qs-card-desc">Open the generated HTML report.</p>
+          </div>
+          <div class="qs-code-block"><span class="code-comment"># Open report in browser</span>
+open reports/skills-health.html   <span class="code-comment"># macOS</span>
+xdg-open reports/skills-health.html  <span class="code-comment"># Linux</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== OPEN SOURCE ========== -->
+  <section id="opensource" aria-label="Open Source">
+    <div class="container">
+      <div class="os-header">
+        <span class="section-label">Open Source</span>
+        <h2 class="section-title">Built by the community, for the community</h2>
+        <p class="section-desc">
+          SHG is free and open source. We welcome contributions from everyone.
+        </p>
+      </div>
+
+      <div class="os-stats">
+        <div class="os-stat">
+          <div class="os-stat-val" id="starsCount">★ 1.2k</div>
+          <div class="os-stat-key">GitHub Stars</div>
+        </div>
+        <div class="os-stat">
+          <div class="os-stat-val" id="forksCount">◷ 89</div>
+          <div class="os-stat-key">Forks</div>
+        </div>
+        <div class="os-stat">
+          <div class="os-stat-val" id="contributorsCount">👥 23</div>
+          <div class="os-stat-key">Contributors</div>
+        </div>
+      </div>
+
+      <div class="os-info">
+        <p>
+          Whether you're fixing bugs, adding features, improving documentation, or just sharing feedback — 
+          we'd love to have you involved. Every contribution makes SHG better for everyone.
+        </p>
+        <div class="os-actions">
+          <a href="https://github.com/tomansen/skills-health-guardian" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            ⭐ Star on GitHub
+          </a>
+          <a href="https://github.com/tomansen/skills-health-guardian/issues" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+            Report an Issue
+          </a>
+        </div>
+        <div class="mit-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          Licensed under MIT
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <div class="footer-brand">Skills <span>Health Guardian</span></div>
+          <div class="footer-copy">&copy; 2026 SHG Team. Open source under MIT.</div>
+        </div>
+        <ul class="footer-nav">
+          <li><a href="https://github.com/tomansen/skills-health-guardian#readme" target="_blank" rel="noopener noreferrer">Docs</a></li>
+          <li><a href="https://github.com/tomansen/skills-health-guardian" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://github.com/tomansen/skills-health-guardian/releases" target="_blank" rel="noopener noreferrer">Changelog</a></li>
+          <li><a href="https://github.com/tomansen/skills-health-guardian/issues" target="_blank" rel="noopener noreferrer">Report Issue</a></li>
+        </ul>
+      </div>
+      <div class="footer-made">
+        Made with <span class="footer-heart">❤️</span> for the AI Agent community
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================
+       JAVASCRIPT
+       ============================================ -->
+  <script>
+    // ---- Scroll-triggered navbar visibility ----
+    const navbar = document.getElementById('navbar');
+    let lastScroll = 0;
+
+    function updateNav() {
+      const currentScroll = window.scrollY;
+      if (currentScroll > 80) {
+        navbar.classList.add('visible');
+      } else {
+        navbar.classList.remove('visible');
+      }
+      lastScroll = currentScroll;
+    }
+    window.addEventListener('scroll', updateNav, { passive: true });
+
+    // ---- IntersectionObserver for sections ----
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px'
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('section').forEach(section => {
+      sectionObserver.observe(section);
+    });
+
+    // ---- Counter Animation (Score + Stats) ----
+    function animateCounter(el, target, duration, decimals = 0, suffix = '') {
+      if (!el) return;
+      const start = performance.now();
+      const startVal = 0;
+
+      function tick(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = startVal + (target - startVal) * eased;
+        
+        el.textContent = current.toFixed(decimals) + suffix;
+        
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          el.textContent = target.toFixed(decimals) + suffix;
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    // Trigger counter when hero is visible
+    let countersStarted = false;
+
+    function startCounters() {
+      if (countersStarted) return;
+      countersStarted = true;
+
+      // Score ring animation
+      const scoreRing = document.getElementById('scoreRing');
+      if (scoreRing) {
+        // Circumference = 2 * PI * r = 2 * 3.14159 * 75 ≈ 471
+        const circumference = 471;
+        // 76.8% → offset = 471 * (1 - 0.768) = ~109.4
+        const targetOffset = circumference * (1 - 0.768);
+        setTimeout(() => {
+          scoreRing.style.strokeDashoffset = targetOffset;
+        }, 300);
+      }
+
+      // Score number
+      animateCounter(document.getElementById('scoreNumber'), 76.8, 2200, 1);
+
+      // Stats with slight delay stagger
+      setTimeout(() => animateCounter(document.getElementById('statHealthy'), 42, 1400, 0), 300);
+      setTimeout(() => animateCounter(document.getElementById('statWarning'), 19, 1400, 0), 500);
+      setTimeout(() => animateCounter(document.getElementById('statAtRisk'), 10, 1400, 0), 700);
+    }
+
+    // Use IntersectionObserver to trigger counters when hero enters viewport
+    const heroObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          startCounters();
+          heroObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+
+    const heroSection = document.getElementById('hero');
+    if (heroSection) heroObserver.observe(heroSection);
+
+    // ---- Terminal typewriter effect ----
+    const terminalLines = [
+      { type: 'prompt', text: '$ ', cls: '' },
+      { type: 'cmd', text: 'shg scan --path ~/.workbuddy/skills', cls: '', delay: 30 },
+      { type: 'output', text: '\nScanning 71 skills...', cls: '', delay: 15 },
+      { type: 'progress', text: '██████████████████████████████████████ 100%', cls: '', delay: 8 },
+      { type: 'output', text: '\n', cls: '' },
+      { type: 'output', text: '╔══════════════════════════════════════╗', cls: '', delay: 5 },
+      { type: 'output', text: '║  🏥 SKILLS HEALTH REPORT             ║', cls: '', delay: 5 },
+      { type: 'output', text: '╠═════════════════╦══════════════════╣', cls: '', delay: 5 },
+      { type: 'output', text: '║  Global Score      ║  76.8/100  ⚠️   ║', cls: '', delay: 5 },
+      { type: 'output', text: '║  Skills Scanned    ║       71         ║', cls: '', delay: 5 },
+      { type: 'output', text: '║  ✅ Healthy        ║       42         ║', cls: '', delay: 5 },
+      { type: 'output', text: '║  ⚠️  Warning        ║       19         ║', cls: '', delay: 5 },
+      { type: 'output', text: '║  🔴 At Risk        ║       10         ║', cls: '', delay: 5 },
+      { type: 'output', text: '╚═════════════════╩══════════════════╝', cls: '', delay: 5 },
+      { type: 'output', text: '\nTop issues found:', cls: '', delay: 5 },
+      { type: 'output', text: '  ⚠️ pillow version conflict (2 skills)', cls: '', delay: 5 },
+      { type: 'output', text: '  🔴 Missing GEMINI_API_KEY (3 skills)', cls: '', delay: 5 },
+      { type: 'output', text: '  ✅ Run \'shg fix --dry-run\' to preview fixes', cls: '', delay: 5 },
+      { type: 'prompt', text: '$ ', cls: '', delay: 5 }
+    ];
+
+    function runTerminalTypewriter() {
+      const terminalBody = document.getElementById('terminalBody');
+      if (!terminalBody) return;
+
+      terminalBody.innerHTML = '';
+
+      let totalDelay = 200; // initial pause before starting
+      let lineIndex = 0;
+
+      terminalLines.forEach((line, idx) => {
+        const span = document.createElement('span');
+        span.className = `tw-line ${line.type === 'cmd' ? 't-cmd' : line.type === 'progress' ? 't-progress' : line.type === 'prompt' ? 't-prompt' : 't-output'}`;
+        span.textContent = line.text;
+        terminalBody.appendChild(span);
+
+        const baseDelay = line.delay || (line.type === 'cmd' ? 25 : 6);
+
+        if (idx === terminalLines.length - 1) {
+          // Last line: add cursor after it becomes visible
+          totalDelay += line.text.length * baseDelay;
+          setTimeout(() => {
+            span.classList.add('visible');
+            const cursor = document.createElement('span');
+            cursor.className = 'typing-cursor';
+            terminalBody.appendChild(cursor);
+          }, totalDelay);
+        } else {
+          totalDelay += line.text.length * baseDelay;
+          setTimeout(() => {
+            span.classList.add('visible');
+          }, totalDelay);
+        }
+      });
+    }
+
+    // Observe demo section to trigger terminal
+    const demoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.dataset.typed) {
+          entry.target.dataset.typed = 'true';
+          runTerminalTypewriter();
+          demoObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.25 });
+
+    const demoSection = document.getElementById('demo');
+    if (demoSection) demoObserver.observe(demoSection);
+
+    // ---- Feature card mouse glow effect ----
+    document.querySelectorAll('.feature-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        card.style.setProperty('--mx', mx + 'px');
+        card.style.setProperty('--my', my + 'px');
+      });
+    });
+
+    // ---- Smooth scroll for anchor links (fallback for older browsers) ----
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && href.length > 1) {
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

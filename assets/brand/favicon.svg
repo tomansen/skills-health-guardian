@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!--
+    SHG Favicon — 简化版，适合 16x16 / 32x32 显示
+    去掉动画和复杂渐变，确保小尺寸清晰可辨
+  -->
+  <defs>
+    <linearGradient id="fv-primary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- 圆角背景 -->
+  <rect x="1" y="1" width="30" height="30" rx="8" fill="#0d1117"/>
+  
+  <!-- 简化 S 形外圈 -->
+  <path
+    d="M16 5 C21.2 5 25.3 7.9 27 12 C28.2 15.3 27.2 19.3 24.4 22.6 C21.6 26 18 28 16 28.3 C14 28 10.4 26 7.6 22.6 C4.8 19.3 3.8 15.3 5 12 C6.7 7.9 10.8 5 16 5Z"
+    fill="none"
+    stroke="url(#fv-primary)"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  
+  <!-- 简化脉冲波 -->
+  <path
+    d="M9 16 L12 16 L14 9 L17 23 L20 11 L22 19 L24 16 L25 16"
+    fill="none"
+    stroke="#22c55e"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  
+  <!-- 脉冲点（静态） -->
+  <circle cx="17" cy="23" r="1.8" fill="#22c55e"/>
+</svg>

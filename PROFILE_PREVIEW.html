@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Profile — tomasen (Preview)</title>
+<style>
+  :root {
+    --bg-primary: #f6f8fa;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f0f2f5;
+    --border-color: #d8dee4;
+    --text-primary: #1f2328;
+    --text-secondary: #656d76;
+    --accent: #5865F2;
+    --accent-light: #5a5fd2;
+    --success: #1a7f37;
+    --code-bg: #f6f8fa;
+    --link: #0969da;
+  }
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    padding: 20px;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+  }
+
+  /* Header */
+  h1 { text-align: center; font-size: 2.4em; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.02em; }
+  h1 a { color: var(--text-primary); text-decoration: none; border-bottom: 2px solid var(--accent); }
+  h1 a:hover { color: var(--accent); }
+  h3 { text-align: center; font-weight: 400; font-style: italic; color: var(--text-secondary); font-size: 1.15em; margin-bottom: 16px; }
+  
+  /* Centered elements */
+  .center { text-align: center; }
+  
+  /* Badges */
+  .badges img, .tech-badges img { 
+    display: inline-block; 
+    margin: 3px 4px !important; 
+    vertical-align: middle;
+    border-radius: 4px;
+  }
+  
+  hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 28px 0;
+  }
+
+  h2 {
+    font-size: 1.6em;
+    font-weight: 600;
+    margin: 32px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+  }
+
+  h3:not(:first-child) { text-align: left; font-style: normal; font-weight: 600; font-size: 1.15em; }
+  
+  p { margin-bottom: 14px; color: var(--text-primary); }
+  ul, ol { padding-left: 24px; margin-bottom: 14px; }
+  li { margin-bottom: 6px; }
+  
+  strong { color: #1f2328; }
+  em { color: var(--text-secondary); }
+  code {
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: 0.88em;
+    color: #cf222e;
+  }
+
+  pre {
+    background: var(--code-bg) !important;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 18px;
+    overflow-x: auto;
+    margin: 16px 0;
+    font-size: 0.85em;
+    line-height: 1.45;
+  }
+  pre code { background: none; padding: 0; color: #1f2328; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.92em;
+  }
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid var(--border-color);
+  }
+  th {
+    background: var(--bg-tertiary);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  td { color: var(--text-secondary); }
+  tr:nth-child(even) td { background: rgba(0,0,0,0.03); }
+
+  /* Details / Summary */
+  details {
+    background: var(--code-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+  }
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--accent-light);
+    outline: none;
+  }
+  summary:hover { color: var(--accent); }
+
+  /* Project card */
+  h3 + p.badges { margin-top: 10px; }
+
+  /* Stats images */
+  .stats img { 
+    border-radius: 8px; 
+    border: 1px solid var(--border-color);
+    max-width: 100%;
+  }
+
+  sub {
+    color: var(--text-secondary);
+    font-size: 0.85em;
+  }
+
+  /* Footer */
+  footer { text-align: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border-color); }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .container { padding: 20px; }
+    h1 { font-size: 1.8em; }
+    .stats img { width: 100% !important; height: auto !important; }
+  }
+
+  /* Preview badge */
+  .preview-badge {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    background: var(--accent);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.78em;
+    font-weight: 600;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(88,101,242,0.4);
+  }
+</style>
+</head>
+<body>
+
+<div class="preview-badge">👁️ PREVIEW MODE</div>
+
+<div class="container">
+
+<h1 align="center">Hi there 👋 I'm <a href="https://github.com/tomasen">tomasen</a></h1>
+
+<h3 align="center">
+  <em>AI Agent Engineer · Open Source Builder · Making Agents Healthier</em>
+</h3>
+
+<p class="center" class="badges">
+  <img src="https://komarev.com/ghpvc/?username=tomasen&color=5865F2&style=flat-square&label=Profile+Views" alt="profile views" />
+</p>
+
+<!-- Tech Badges -->
+<p class="center tech-badges">
+  <img src="https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/-MCP-000000?style=flat-square&logo=modelcontextprotocol&logoColor=white" alt="MCP" />
+  <img src="https://img.shields.io/badge/-AI%20Agents-FF6F00?style=flat-square&logo=artificial-intelligence&logoColor=white" alt="AI Agents" />
+  <img src="https://img.shields.io/badge/-WeChat%20Mini%20Program-07C160?style=flat-square&logo=wechat&logoColor=white" alt="微信小程序" />
+  <img src="https://img.shields.io/badge/-Cloud%20Dev-4FC3F7?style=flat-square&logo=tencent-cloud&logoColor=white" alt="云开发" />
+</p>
+
+<hr>
+
+<h2>🧑‍💻 About Me</h2>
+
+<p>I'm an <strong>AI Agent developer</strong> who believes in building things that actually work — not just demos.</p>
+
+<p>My journey started with WeChat Mini Programs and cloud development, then evolved into the fascinating world of <strong>MCP (Model Context Protocol)</strong> and autonomous agent systems. Now I spend most of my time:</p>
+
+<ul>
+<li>🔧 Building open-source tools for the <strong>AI Agent ecosystem</strong> — making agents more observable, healthier, and easier to manage</li>
+<li>🏗️ Designing <strong>agent team workflows</strong> that mirror real engineering practices (because AI should ship like real software)</li>
+<li>🌍 Bridging <strong>Chinese developer communities</strong> with global open-source standards</li>
+</ul>
+
+<p>I'm a firm believer in: <em>Ship it. Measure it. Improve it.</em> （做出来，跑起来，迭代好。）</p>
+
+<p><strong>Fun fact</strong>: I manage a digital team of 9 AI "employees" (数字员工) to help run my projects. Yes, really.</p>
+
+<hr>
+
+<h2>🛠️ Tech Stack</h2>
+
+<table>
+<thead>
+<tr><th>Category</th><th>Technologies</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Core</strong></td><td>Python, JavaScript/TypeScript, Shell/Bash</td></tr>
+<tr><td><strong>AI / Agents</strong></td><td>LLMs (DeepSeek, Claude), MCP, RAG, Prompt Engineering, Agent Workflows</td></tr>
+<tr><td><strong>Cloud</strong></td><td>Tencent Cloud Dev (云开发), Serverless Functions, Cloud Database</td></tr>
+<tr><td><strong>Mobile</strong></td><td>WeChat Mini Programs (WXML/WXSS/WXS), Native APIs</td></tr>
+<tr><td><strong>Tools</strong></td><td>Git, Docker, CI/CD, Notion API, Automation</td></tr>
+<tr><td><strong>Design</strong></td><td>Figma, Markdown, Shield.io Badges</td></tr>
+</tbody>
+</table>
+
+<hr>
+
+<h2>🎯 Current Focus</h2>
+
+<table>
+<thead>
+<tr><th>Area</th><th>What I'm Doing</th></tr>
+</thead>
+<tbody>
+<tr><td>🤖 <strong>Agent Health</strong></td><td>Skills Health Guardian (SHG) — 全栈 Agent Skill 环境健康监控与管理平台</td></tr>
+<tr><td>🔌 <strong>MCP Ecosystem</strong></td><td>Building MCP servers & tools to extend AI capabilities</td></tr>
+<tr><td>📱 <strong>WeChat + AI</strong></td><td>Exploring AI-powered mini programs for education & member management</td></tr>
+<tr><td>🌐 <strong>Open Source</strong></td><td>Sharing patterns, templates, and reusable skills for the Chinese dev community</td></tr>
+<tr><td>🏗️ <strong>Agent Teams</strong></td><td>Experimenting with multi-agent collaboration workflows for real-world projects</td></tr>
+</tbody>
+</table>
+
+<hr>
+
+<h2>⭐ Featured Projects</h2>
+
+<h3><a href="https://github.com/tomasen/skills-health-guardian">🛡️ Skills Health Guardian (SHG)</a></h3>
+<p><em>Skills 环境健康管家 — 让你的 Agent Skills 永远保持最佳状态</em></p>
+
+<p class="badges">
+  <img src="https://img.shields.io/badge/status-active-brightgreen?style=flat-square" alt="status" />
+  <img src="https://img.shields.io/badge/language-Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="license" />
+</p>
+
+<p>A comprehensive health monitoring & management platform for AI Agent Skills:</p>
+<ul>
+<li>🔍 <strong>Dependency Scanning</strong> — 自动发现并分析所有 Skill 依赖项</li>
+<li>⚠️ <strong>Conflict Detection</strong> — 版本冲突与兼容性检测</li>
+<li>📊 <strong>Health Scoring</strong> — 0-100 健康评分仪表盘</li>
+<li>🩹 <strong>Auto-Fix Suggestions</strong> — 一键修复建议与执行</li>
+<li>📰 <strong>Multi-format Reports</strong> — Markdown / JSON / HTML 可视化报告</li>
+</ul>
+
+<details open>
+<summary><b>📖 SHG Architecture Overview</b></summary>
+
+<pre>┌─────────────────────────────────────────────┐
+│           SHG Dashboard (Web UI)            │
+├──────────────┬──────────────────────────────┤
+│   Scanner    │    Reporter     │   Fixer    │
+│  (依赖发现)   │  (报告生成)      │  (自动修复) │
+├──────────────┴──────────────────────────────┤
+│          Health Check Engine                │
+│     (评分引擎 + 规则库 + 历史追踪)            │
+└─────────────────────────────────────────────┘
+         ▲
+         │ MCP / CLI
+┌────────┴────────┐
+│  Skill Registry │  ← ~/.workbuddy/skills/*
+└─────────────────┘</pre>
+
+</details>
+
+<hr>
+
+<h2>📊 GitHub Stats</h2>
+
+<p class="center stats">
+  <img style="max-width:49%;height:180px;" src="https://github-readme-stats.vercel.app/api?username=tomasen&show_icons=true&theme=github_light&hide_border=true&include_all_commits=true&count_private=true&bg_color=FFFFFF&title_color=5865F2&icon_color=5865F2&text_color=24292e" alt="tomasen's github stats" onerror="this.src='data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22180%22%3E%3Crect fill=%22%23161b22%22 width=%22100%25%22 height=%22100%25%22 rx=%228%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%238b949e%22 font-family=%22sans-serif%22 font-size=%2214%22%fill=%22%23ffffff%22 width=%22100%25%22 height=%22100%25%22 rx=%228%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23656d76%22 font-family=%22sans-serif%22 font-size=%2214%22ETop Languages (live preview)%3C/text%3E%3C/svg%3E'" />
+</p>
+
+<p class="center stats">
+  <img style="max-width:60%;" src="https://github-readme-streak-stats.herokuapp.com/?user=tomasen&theme=github-light-blue&hide_border=true&background=ffffff&dates=24292e&currStreakLabel=5865F2&sideLabels=656d76&sideNums=5865F2" alt="streak stats" onerror="this.src='data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22200%22%3E%3Crect fill=%22%23161b22%22 width=%22100%25%22 height=%22100%25%22 rx=%228%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%238b949e%22 font-family=%22sans-serif%22 font-size=%2214%22fill=%22%23ffffff%22 width=%22100%25%22 height=%22100%25%22 rx=%228%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23656d76
+</p>
+
+<hr>
+
+<h2>📫 Contact</h2>
+
+<p class="center badges">
+  <a href="mailto:tomansen@163.com"><img src="https://img.shields.io/badge/Email-tomansen@163.com-D14836?style=flat-square&logo=gmail&logoColor=white" alt="email" /></a>
+</p>
+
+<p class="center">
+  <sub>💡 <em>Feel free to reach out for collaborations on AI Agents, MCP, or anything open-source!</em></sub><br/>
+  <sub>🇨🇳 <em>欢迎中文交流！开源合作随时联系。</em></sub>
+</p>
+
+<hr>
+
+<footer>
+<p><em>Built with ❤️ and too much ☕</em></p>
+<p><img src="https://img.shields.io/badge/Made%20with-MCP-black?style=flat-square" alt="made with mcp" /></p>
+</footer>
+
+</div>
+</body>
+</html>
