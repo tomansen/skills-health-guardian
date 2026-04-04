@@ -1,0 +1,59 @@
+name: 💡 Feature Request
+description: 提出新功能建议或改进想法
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你的建议！SHG 的每项功能都来自社区反馈。
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题/需求背景
+      description: 这个功能解决了什么问题？为什么需要它？
+      placeholder: 目前扫描结果只有终端文本输出，不方便在 CI/CD 中集成...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 建议方案
+      description: 你希望这个功能如何工作？
+      placeholder: 希望增加 --format json 输出格式，方便其他工具解析
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 功能分类
+      options:
+        - 扫描 (Scanner)
+        - 评分 (Scorer)
+        - 修复 (Fixer)
+        - 报告 (Reporter)
+        - CLI / 交互
+        - MCP Server
+        - Dashboard / UI
+        - 文档
+        - 其他
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 替代方案
+      description: 你考虑过其他解决方案吗？
+      placeholder: 也可以用 jq 解析当前输出，但不够结构化...
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: 参与意愿
+      options:
+        - label: 我愿意参与实现这个功能（PR）
+        - label: 我可以帮忙编写测试用例
+        - label: 我可以帮助完善文档说明

@@ -1,0 +1,56 @@
+name: 📊 Health Report
+description: 分享 SHG 扫描结果，讨论健康评分和修复建议
+labels: ["report", "discussion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        分享你的扫描结果！这可以帮助我们了解不同环境的健康状态分布。
+
+  - type: dropdown
+    id: health-score
+    attributes:
+      label: 健康评分
+      description: 你的 Skills 环境总体健康分是多少？
+      options:
+        - "90-100 (非常健康 ✨)"
+        - "70-89 (良好 👍)"
+        - "50-69 (需关注 ⚠️)"
+        - "30-49 (不健康 🔴)"
+        - "0-29 (严重问题 💥)"
+    validations:
+      required: true
+
+  - type: input
+    id: skill-count
+    attributes:
+      label: Skill 数量
+      placeholder: 71
+
+  - type: textarea
+    id: findings
+    attributes:
+      label: 主要发现
+      description: 扫描中发现的突出问题
+      placeholder: |
+        - 5 个 Skill 存在版本冲突
+        - 3 个 Skill 缺少 requirements.txt
+        - 1 个 Skill 有未声明的环境变量依赖
+
+  - type: textarea
+    id: report-content
+    attributes:
+      label: 报告内容（可选）
+      description: 可粘贴 Markdown/JSON 报告原文
+      render: markdown
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: 操作系统
+      options:
+        - macOS
+        - Linux
+        - Windows (WSL)
+        - Windows Native
+        - 其他

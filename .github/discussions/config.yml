@@ -1,0 +1,52 @@
+# GitHub Discussions 配置
+# 需要在仓库 Settings → Features 中手动开启 Discussions
+# 开启后此文件会自动生效
+
+repository:
+  name: skills-health-guardian
+  description: "🛡️ Skills 环境健康管家 — AI Agent Skills 运行环境监控与管理平台"
+
+teams:
+  - name: maintainers
+    label: 维护者
+    description: 项目核心维护团队
+    members:
+      - tomansen
+
+categories:
+  - name: 💡 Ideas
+    slug: ideas
+    description: 新功能建议和改进想法
+    emoji: 💡
+
+  - name: ❓ Q&A
+    slug: q-and-a
+    description: 使用问题、安装帮助和技术咨询
+    emoji: ❓
+
+  - name: 📊 Show & Tell
+    slug: show-and-tell
+    description: 分享扫描结果和使用心得
+    emoji: 📊
+
+  - name: 🔧 Troubleshooting
+    slug: troubleshooting
+    description: 问题排查和错误诊断
+    emoji: 🔧
+
+labels:
+  - name: "good first issue"
+    color: "#7057ff"
+    description: 适合新贡献者入手的 Issue
+  - name: "help wanted"
+    color: "#008672"
+    description: 需要社区帮助
+  - name: "bug"
+    color: "#d73a4a"
+    description: Bug 报告
+  - name: "enhancement"
+    color: "#a2eeef"
+    description: 功能增强建议
+  - name: "documentation"
+    color: "#0075ca"
+    description: 文档改进
