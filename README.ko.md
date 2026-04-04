@@ -524,7 +524,7 @@ make help
 ```
 MIT License
 
-Copyright (c) 2026 WorkBuddy AI / tomasen
+Copyright (c) 2026 tomasen (https://github.com/tomasen)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -558,6 +558,5 @@ copies or substantial portions of the Software.
 <p align="center">
   <b>🛡️ Skills Health Guardian</b><br>
   <sub>AI 에이전트 스킬을 안전하게 지키는 건강 관리자</sub><br><br>
-  Made with ❤️ by <a href="https://github.com/tomasen">tomasen</a> &
-  <a href="https://www.codebuddy.cn">WorkBuddy AI</a>
+  Made with ❤️ by <a href="https://github.com/tomasen">tomasen</a>
 </p>

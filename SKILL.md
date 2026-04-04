@@ -3,7 +3,7 @@ name: skills-health-guardian
 description: "Skills 环境健康管家 — 自动巡检所有 Agent Skills 的运行环境依赖、版本冲突、API Key 配置状态，生成健康报告，提供自动修复建议，并支持定期巡检和趋势追踪。触发词：环境检查、skill检查、依赖冲突、环境健康、环境巡检、skills scan、health check、环境维护、技能管理。"
 version: "1.0.0"
 metadata:
-  author: WorkBuddy AI
+  author: tomasen (tomansen@163.com)
   license: MIT
 ---
 

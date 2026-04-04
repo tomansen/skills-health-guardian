@@ -9,7 +9,7 @@ description = "Skills Environment Health Guardian — 自动巡检所有 Agent S
 readme = "SKILL.md"
 license = {text = "MIT"}
 authors = [
-    {name = "WorkBuddy Team"}
+    {name = "tomasen", email = "tomansen@163.com"}
 ]
 requires-python = ">=3.9"
 dependencies = [
@@ -20,8 +20,8 @@ dependencies = [
 health-check = "scripts/health-check.sh"
 
 [project.urls]
-Homepage = "https://github.com/workbuddy/skills-health-guardian"
-Repository = "https://github.com/workbuddy/skills-health-guardian"
+Homepage = "https://github.com/tomasen/skills-health-guardian"
+Repository = "https://github.com/tomasen/skills-health-guardian"
 
 [tool.setuptools.packages.find]
 include = ["scripts*"]

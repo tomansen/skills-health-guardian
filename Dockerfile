@@ -5,7 +5,7 @@
 
 FROM python:3.13-slim
 
-LABEL maintainer="SHG Team <https://github.com/tomansen/skills-health-guardian>"
+LABEL maintainer="tomasen <tomansen@163.com>"
 LABEL description="Skills Health Guardian - AI Agent Skills Environment Health Monitor"
 LABEL version="1.0.0"
 LABEL org.opencontainers.image.source="https://github.com/tomansen/skills-health-guardian"

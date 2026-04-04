@@ -107,12 +107,12 @@ A comprehensive health monitoring & management platform for AI Agent Skills:
 ## 📊 GitHub Stats
 
 <p align="center">
-  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=tomasen&show_icons=true&theme=github_dark&hide_border=true&include_all_commits=true&count_private=true&bg_color=0D1117&title_color=5865F2&icon_color=5865F2&text_color=C9D1D9" alt="tomasen's github stats" />
-  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=tomasen&layout=compact&langs_count=8&theme=github_dark&hide_border=true&bg_color=0D1117&title_color=5865F2&text_color=C9D1D9" alt="tomasen's top languages" />
+  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=tomasen&show_icons=true&theme=github_light&hide_border=true&include_all_commits=true&count_private=true&bg_color=FFFFFF&title_color=5865F2&icon_color=5865F2&text_color=24292e" alt="tomasen's github stats" />
+  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=tomasen&layout=compact&langs_count=8&theme=github_light&hide_border=true&bg_color=FFFFFF&title_color=5865F2&text_color=24292e" alt="tomasen's top languages" />
 </p>
 
 <p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=tomasen&theme=github-dark-blue&hide_border=true&background=0D1117&dates=FFFFFF&currStreakLabel=5865F2&sideLabels=C9D1D9&sideNums=5865F2" alt="streak stats" />
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=tomasen&theme=github-light-blue&hide_border=true&background=ffffff&dates=24292e&currStreakLabel=5865F2&sideLabels=656d76&sideNums=5865F2" alt="streak stats" />
 </p>
 
 ---

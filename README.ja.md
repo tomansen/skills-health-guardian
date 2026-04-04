@@ -442,7 +442,7 @@ flake8 scripts/
 このプロジェクトは [MIT License](LICENSE) の下でライセンスされています。
 
 ```
-Copyright (c) 2026 WorkBuddy AI / tomasen
+Copyright (c) 2026 tomasen (https://github.com/tomasen)
 
 本ソフトウェアおよび関連文書ファイル（以下「ソフトウェア」と言います）の
 コピーを誰でも無償で取得することができます。これには、ソフトウェアのコピーを
@@ -468,7 +468,7 @@ Copyright (c) 2026 WorkBuddy AI / tomasen
 ---
 
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/tomasen">WorkBuddy AI</a>
+  Made with ❤️ by <a href="https://github.com/tomasen">tomasen</a>
 </p>
 
 <p align="center">
