@@ -62,7 +62,10 @@ class SkillsFixEngine:
                     for line in req_txt.read_text().splitlines():
                         line = line.strip()
                         if line and not line.startswith('#'):
-                            pkg_name = line.split('>=')[0].split('==')[0].split('<=')[0].split('~=').strip().split(',')[0].strip()
+                            pkg_name = line.split('>=')[0].split('==')[0].split('<=')[0].split('~=')
+                            if isinstance(pkg_name, list):
+                                pkg_name = pkg_name[0]
+                            pkg_name = str(pkg_name).strip().split(',')[0].strip()
                             if pkg_name and not self._pip_installed(pkg_name):
                                 missing_pip.append(line)
 
@@ -142,7 +145,10 @@ class SkillsFixEngine:
                     ]
                     for p in patterns:
                         for m in re.finditer(p, content, re.IGNORECASE):
-                            var = m.group(1)
+                            try:
+                                var = m.group(1)
+                            except IndexError:
+                                continue
                             if var and len(var) > 2:
                                 if var not in all_vars:
                                     all_vars[var] = []
@@ -312,8 +318,7 @@ class SkillsFixEngine:
                     capture_output=True, timeout=5
                 )
                 return r.returncode == 0
-            r = subprocess.run([tool, "--version"], capture_output=True, timeout=5,
-                             stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+            r = subprocess.run([tool, "--version"], capture_output=True, timeout=5)
             return r.returncode == 0
         except (FileNotFoundError, OSError):
             return False
