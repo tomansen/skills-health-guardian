@@ -1,11 +1,11 @@
-<h1 align="center">Hi there 👋 I'm <a href="https://github.com/tomasen">tomasen</a></h1>
+<h1 align="center">Hi there 👋 I'm <a href="https://github.com/tomansen">tomansen</a></h1>
 
 <h3 align="center">
   <em>AI Agent Engineer · Open Source Builder · Making Agents Healthier</em>
 </h3>
 
 <p align="center">
-  <img src="https://komarev.com/ghpvc/?username=tomasen&color=5865F2&style=flat-square&label=Profile+Views" alt="profile views" />
+  <img src="https://komarev.com/ghpvc/?username=tomansen&color=5865F2&style=flat-square&label=Profile+Views" alt="profile views" />
 </p>
 
 <!-- Tech Badges -->
@@ -64,7 +64,7 @@ I'm a firm believer in: *Ship it. Measure it. Improve it.* （做出来，跑起
 
 ## ⭐ Featured Projects
 
-### 🛡️ [Skills Health Guardian (SHG)](https://github.com/tomasen/skills-health-guardian)
+### 🛡️ [Skills Health Guardian (SHG)](https://github.com/tomansen/skills-health-guardian)
 *Skills 环境健康管家 — 让你的 Agent Skills 永远保持最佳状态*
 
 <p>
@@ -107,12 +107,12 @@ A comprehensive health monitoring & management platform for AI Agent Skills:
 ## 📊 GitHub Stats
 
 <p align="center">
-  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=tomasen&show_icons=true&theme=github_light&hide_border=true&include_all_commits=true&count_private=true&bg_color=FFFFFF&title_color=5865F2&icon_color=5865F2&text_color=24292e" alt="tomasen's github stats" />
-  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=tomasen&layout=compact&langs_count=8&theme=github_light&hide_border=true&bg_color=FFFFFF&title_color=5865F2&text_color=24292e" alt="tomasen's top languages" />
+  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=tomansen&show_icons=true&theme=github_light&hide_border=true&include_all_commits=true&count_private=true&bg_color=FFFFFF&title_color=5865F2&icon_color=5865F2&text_color=24292e" alt="tomansen's github stats" />
+  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=tomansen&layout=compact&langs_count=8&theme=github_light&hide_border=true&bg_color=FFFFFF&title_color=5865F2&text_color=24292e" alt="tomansen's top languages" />
 </p>
 
 <p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=tomasen&theme=github-light-blue&hide_border=true&background=ffffff&dates=24292e&currStreakLabel=5865F2&sideLabels=656d76&sideNums=5865F2" alt="streak stats" />
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=tomansen&theme=github-light-blue&hide_border=true&background=ffffff&dates=24292e&currStreakLabel=5865F2&sideLabels=656d76&sideNums=5865F2" alt="streak stats" />
 </p>
 
 ---

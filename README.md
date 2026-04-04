@@ -323,7 +323,7 @@ We welcome contributions! Here's how to get started:
 This project is licensed under the terms of the **MIT License**.
 
 ```
-Copyright (c) 2026 tomasen (https://github.com/tomasen)
+Copyright (c) 2026 tomansen (https://github.com/tomansen)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -351,7 +351,7 @@ consider giving it a star on GitHub!
   <img src="https://img.shields.io/github/stars/WorkBuddy-AI/skills-health-guardian?style=social" alt="GitHub Stars">
 </a>
 
-**[tomasen](https://github.com/tomasen)** · **[Skills Health Guardian](https://github.com/tomasen/skills-health-guardian)** · **[Report a Bug](https://github.com/tomasen/skills-health-guardian/issues)** · **[Suggest a Feature](https://github.com/tomasen/skills-health-guardian/issues/new)**
+**[tomansen](https://github.com/tomansen)** · **[Skills Health Guardian](https://github.com/tomansen/skills-health-guardian)** · **[Report a Bug](https://github.com/tomansen/skills-health-guardian/issues)** · **[Suggest a Feature](https://github.com/tomansen/skills-health-guardian/issues/new)**
 
 *Built with ❤️ for the AI Agent developer community*
 

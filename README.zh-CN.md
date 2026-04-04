@@ -397,7 +397,7 @@ make release       # 创建新版本发布
 本项目采用 [MIT License](LICENSE) 开源协议。
 
 ```
-Copyright (c) 2026 tomasen (https://github.com/tomasen)
+Copyright (c) 2026 tomansen (https://github.com/tomansen)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
