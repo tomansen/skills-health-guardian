@@ -28,6 +28,7 @@ class HealthReporter:
         self.output_base = Path(output_base) if output_base else Path.home() / ".workbuddy" / "skills" / "skills-health-guardian" / "reports"
         self.history_dir = self.output_base / "history"
         self.history_dir.mkdir(parents=True, exist_ok=True)
+        self.max_history = 30  # 默认保留最近30天
 
     def generate(self, scan_data: dict, config: Optional[ReportConfig] = None) -> str:
         """生成完整报告"""
