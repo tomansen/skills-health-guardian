@@ -3,7 +3,6 @@ test_reporter.py — HealthReporter 报告生成器单元测试
 覆盖：Markdown/JSON/HTML 输出格式、内容完整性、保存与快照机制
 """
 
-import pytest
 import json
 from pathlib import Path
 
@@ -240,8 +239,6 @@ class TestSuggestionsGeneration:
             mock_scan_result["summary"],
             mock_scan_result["skills"]
         )
-        # unique_runtimes 包含 python3 和 uv
-        has_runtime_sug = any("uv" in s or "python3" in s for s in suggestions)
         # 注意：如果运行时已安装在系统上，可能不会触发此建议
         assert isinstance(suggestions, list)
 
@@ -252,8 +249,6 @@ class TestSuggestionsGeneration:
             mock_scan_result["summary"],
             mock_scan_result["skills"]
         )
-        # skill-c 健康分 40 < 60 且有 issues
-        has_low_score_sug = any("skill-c" in s for s in suggestions)
         assert isinstance(suggestions, list)
 
 

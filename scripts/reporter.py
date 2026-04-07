@@ -55,8 +55,8 @@ class HealthReporter:
         status_icon = "🟢" if avg >= 80 else "🟡" if avg >= 50 else "🔴"
         status_text = "良好" if avg >= 80 else "需关注" if avg >= 50 else "紧急"
 
-        lines.append(f"| 指标 | 数值 | 状态 |")
-        lines.append(f"|------|------|------|")
+        lines.append("| 指标 | 数值 | 状态 |")
+        lines.append("|------|------|------|")
         lines.append(f"| 全局健康指数 | **{avg:.1f}/100** | {status_icon} {status_text} |")
         lines.append(f"| ✅ 健康 Skills (≥80) | **{summary.get('healthy_count', 0)}** | 🟢 |")
         lines.append(f"| ⚠️ 警告 Skills (50-79) | **{summary.get('warning_count', 0)}** | 🟡 |")
@@ -287,8 +287,13 @@ tr:hover td {{ background: rgba(255,255,255,0.03); }}
         dep_counts: dict[str, int] = {}
         for name, report in skills.items():
             for d in report.get('dependencies', []):
-                dep_name = d.get('name', '')
-                dep_type = d.get('dep_type', '')
+                if isinstance(d, dict):
+                    dep_name = d.get('name', '')
+                    dep_type = d.get('dep_type', '')
+                else:
+                    # dataclass: use attribute access
+                    dep_name = getattr(d, 'name', '')
+                    dep_type = getattr(d, 'dep_type', '')
                 if dep_type == 'pip':
                     dep_counts[dep_name] = dep_counts.get(dep_name, 0) + 1
 

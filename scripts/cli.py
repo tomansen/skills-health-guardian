@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# ruff: noqa: E402 (module level import not at top - needed for sys.path manipulation)
 """
 Skills Health Guardian CLI — 统一命令行入口
 提供彩色终端输出、多格式报告、Watch 模式、自定义输出路径等功能。
@@ -20,14 +21,13 @@ import json
 import time
 import argparse
 from pathlib import Path
-from datetime import datetime
 
 # 确保能 import 同目录下的模块
 SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
-from scanner import SkillsScanner, print_report as scanner_print_report
+from scanner import SkillsScanner
 from reporter import HealthReporter, ReportConfig
 
 
@@ -315,7 +315,7 @@ def run_watch_mode(args):
             f"\n{'─' * 56}\n"
             f"  🔍 Watch mode | Interval: {interval}s | "
             f"Cycle: {count}" + (f"/{max_count}" if max_count else "") +
-            f" | Ctrl+C to exit\n"
+            " | Ctrl+C to exit\n"
         )
         output += watch_info
         print(output)
@@ -491,8 +491,8 @@ Examples:
         if critical_count > 0 or warning_count > 0:
             if not args.dry_run:
                 print(
-                    f"\n💡 Tip: Run with --dry-run to preview fixes, "
-                    f"or use fixer.py directly for repairs.",
+                    "\n💡 Tip: Run with --dry-run to preview fixes, "
+                    "or use fixer.py directly for repairs.",
                     file=sys.stderr
                 )
 

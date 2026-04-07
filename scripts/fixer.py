@@ -6,7 +6,6 @@ Skills Fix Engine - 自动修复与建议引擎
 
 import json
 import subprocess
-import sys
 import os
 from pathlib import Path
 from datetime import datetime
@@ -353,7 +352,6 @@ class SkillsFixEngine:
 
 def main():
     import argparse
-    from scanner import SkillsScanner
 
     default_skills = str(Path.home() / ".workbuddy" / "skills")
 
@@ -404,8 +402,6 @@ def main():
             print("✅ 未发现需要立即修复的问题！")
 
     elif args.command == "fix":
-        do_it = args.yes or (not args.dry_run)
-
         if args.dry_run:
             print("👀 **DRY RUN 模式** — 仅预览，不会执行任何操作\n")
 

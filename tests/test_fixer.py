@@ -390,7 +390,7 @@ class TestGenerateEnvTemplate:
         """指定 output_path 时应将模板写入文件。"""
         out = tmp_path / ".env.template"
         engine = SkillsFixEngine(str(skill_with_env_vars))
-        result = engine.generate_env_template(str(out))
+        engine.generate_env_template(str(out))
 
         assert out.exists()
         content = out.read_text(encoding="utf-8")
