@@ -14,6 +14,9 @@ from dataclasses import dataclass, field, asdict
 from typing import Optional
 from datetime import datetime
 
+# 跨平台工具检测
+from platform_utils import find_chrome_path, check_chrome_installed
+
 
 @dataclass
 class SkillDependency:
@@ -69,7 +72,7 @@ class SkillsScanner:
             "python3": {"check": "python3 --version", "type": "system"},
             "pip3": {"check": "pip3 --version", "type": "system"},
             "playwright": {"check": "playwright --version", "type": "pip"},
-            "chrome": {"check": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --version", "type": "system"},
+            # Chrome 检测在运行时动态处理，不在静态字典中硬编码
         }
 
         # Python 包版本检测模式
@@ -384,11 +387,8 @@ class SkillsScanner:
         """检查工具是否可用"""
         try:
             if tool == 'chrome':
-                result = subprocess.run(
-                    ["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "--version"],
-                    capture_output=True, timeout=5
-                )
-                return result.returncode == 0
+                # 跨平台 Chrome 检测
+                return check_chrome_installed()
             elif tool == 'playwright':
                 # 特殊处理：playwright 可能是 Python 包
                 result = subprocess.run(
@@ -498,7 +498,30 @@ class SkillsScanner:
         return json_str
 
 
+# ════════════════════════════════════════════════════════
+#  Python 版本检查
+# ════════════════════════════════════════════════════════
+MIN_PYTHON_VERSION = (3, 12)
+
+def check_python_version():
+    """检查 Python 版本是否符合要求"""
+    if sys.version_info < MIN_PYTHON_VERSION:
+        print(f"\n{'='*60}")
+        print(f"  ❌ 错误: Python 版本不足")
+        print(f"{'='*60}")
+        print(f"\n  Skills Health Guardian 需要 Python {MIN_PYTHON_VERSION[0]}.{MIN_PYTHON_VERSION[1]} 或更高版本")
+        print(f"  当前版本: Python {sys.version}")
+        print(f"\n  💡 如何升级 Python:")
+        print(f"     • macOS:    brew install python@3.12")
+        print(f"     • Linux:    sudo apt install python3.12")
+        print(f"     • Windows:  https://www.python.org/downloads/")
+        print(f"\n{'='*60}\n")
+        sys.exit(1)
+
 def main():
+    # 首先检查 Python 版本
+    check_python_version()
+
     # 默认路径
     default_path = Path.home() / ".workbuddy" / "skills"
 
@@ -556,7 +579,7 @@ def print_report(scanner: SkillsScanner):
     print(f"  ⚠️  警告 (50-79): {summary['warning_count']}")
     print(f"  🔴 异常 (<50): {summary['critical_count']}")
 
-    print(f"\n  📋 依赖统计:")
+    print("\n  📋 依赖统计:")
     print(f"     有脚本的 Skills: {summary['skills_with_scripts']}")
     print(f"     有依赖声明的:     {summary['skills_with_dependencies']}")
     print(f"     总依赖项数:       {summary['total_dependencies']}")
@@ -612,7 +635,7 @@ def print_report(scanner: SkillsScanner):
         print()
 
     print(sep)
-    print(f"  💡 提示: 使用 --json 参数导出机器可读报告，或 --output report.json 保存")
+    print("  💡 提示: 使用 --json 参数导出机器可读报告，或 --output report.json 保存")
     print()
 
 

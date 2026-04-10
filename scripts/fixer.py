@@ -11,6 +11,9 @@ from pathlib import Path
 from datetime import datetime
 from typing import Optional
 
+# 跨平台工具检测
+from platform_utils import check_chrome_installed
+
 
 class SkillsFixEngine:
     """Skills 环境修复引擎"""
@@ -312,11 +315,8 @@ class SkillsFixEngine:
         """检查工具是否存在"""
         try:
             if tool == 'chrome':
-                r = subprocess.run(
-                    ["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "--version"],
-                    capture_output=True, timeout=5
-                )
-                return r.returncode == 0
+                # 跨平台 Chrome 检测
+                return check_chrome_installed()
             r = subprocess.run([tool, "--version"], capture_output=True, timeout=5)
             return r.returncode == 0
         except (FileNotFoundError, OSError):

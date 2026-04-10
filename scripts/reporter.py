@@ -11,6 +11,9 @@ from datetime import datetime, timedelta
 from dataclasses import dataclass
 from typing import Optional
 
+# 跨平台工具检测
+from platform_utils import check_chrome_installed
+
 
 @dataclass
 class ReportConfig:
@@ -241,9 +244,8 @@ tr:hover td {{ background: rgba(255,255,255,0.03); }}
         import subprocess
         try:
             if rt == 'chrome':
-                r = subprocess.run(["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "--version"],
-                                 capture_output=True, timeout=5)
-                return r.returncode == 0
+                # 跨平台 Chrome 检测
+                return check_chrome_installed()
             elif rt == 'playwright':
                 r = subprocess.run(["python3", "-m", "playwright", "--version"],
                                  capture_output=True, timeout=10)
