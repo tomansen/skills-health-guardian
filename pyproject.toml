@@ -1,6 +1,6 @@
 [build-system]
 requires = ["setuptools>=64", "wheel"]
-build-backend = "setuptools.backends._legacy:_Backend"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "skills-health-guardian"
@@ -34,12 +34,12 @@ classifiers = [
 dev = [
     "pytest>=7.0",
     "pytest-cov>=4.0",
-    "pytest-mock>=3.0",
+    "pytest-mock>=3.10",
 ]
 
 [project.scripts]
-shg-check = "scripts.health-check.sh:main"
-shg-fix = "scripts.fixer.py:main"
+shg-check = "scripts.cli:main"
+shg-fix = "scripts.fixer:main"
 
 [project.urls]
 Homepage = "https://github.com/tomansen/skills-health-guardian"
