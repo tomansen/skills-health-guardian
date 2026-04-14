@@ -116,31 +116,31 @@ class TestStatusIcon:
     @patch("cli.colorize", return_value="COLORED")
     def test_healthy_score(self, mock_col):
         """≥80 分应返回 Healthy 状态。"""
-        result = status_icon(85)
+        status_icon(85)
         assert "Healthy" in mock_col.call_args[0][0]
 
     @patch("cli.colorize", return_value="COLORED")
     def test_warning_score(self, mock_col):
         """50-79 分应返回 Warning 状态。"""
-        result = status_icon(60)
+        status_icon(60)
         assert "Warning" in mock_col.call_args[0][0]
 
     @patch("cli.colorize", return_value="COLORED")
     def test_error_score(self, mock_col):
         """<50 分应返回 Error 状态。"""
-        result = status_icon(30)
+        status_icon(30)
         assert "Error" in mock_col.call_args[0][0]
 
     @patch("cli.colorize", return_value="COLORED")
     def test_boundary_80(self, mock_col):
         """80 分边界值应返回 Healthy。"""
-        result = status_icon(80)
+        status_icon(80)
         assert "Healthy" in mock_col.call_args[0][0]
 
     @patch("cli.colorize", return_value="COLORED")
     def test_boundary_50(self, mock_col):
         """50 分边界值应返回 Warning。"""
-        result = status_icon(50)
+        status_icon(50)
         assert "Warning" in mock_col.call_args[0][0]
 
 
@@ -152,17 +152,17 @@ class TestScoreColorStr:
 
     @patch("cli.colorize", return_value="COLORED")
     def test_high_score(self, mock_col):
-        result = score_color_str(90)
+        score_color_str(90)
         assert "90/100" in mock_col.call_args[0][0]
 
     @patch("cli.colorize", return_value="COLORED")
     def test_mid_score(self, mock_col):
-        result = score_color_str(55)
+        score_color_str(55)
         assert "55/100" in mock_col.call_args[0][0]
 
     @patch("cli.colorize", return_value="COLORED")
     def test_low_score(self, mock_col):
-        result = score_color_str(20)
+        score_color_str(20)
         assert "20/100" in mock_col.call_args[0][0]
 
 

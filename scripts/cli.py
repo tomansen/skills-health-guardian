@@ -339,12 +339,12 @@ def main():
     
     # 检查是否有必要的文件
     if not (SCRIPT_DIR / "scanner.py").exists():
-        print(f"\n{'='*60}")
-        print(f"  ❌ 错误: 找不到 scripts 目录")
-        print(f"{'='*60}")
-        print(f"\n  💡 请确保在项目根目录运行此命令:")
-        print(f"     $ cd skills-health-guardian")
-        print(f"     $ python3 scripts/cli.py --help")
+        print("\n" + "=" * 60)
+        print("  ❌ 错误: 找不到 scripts 目录")
+        print("=" * 60)
+        print("\n  💡 请确保在项目根目录运行此命令:")
+        print("     $ cd skills-health-guardian")
+        print("     $ python3 scripts/cli.py --help")
         print(f"\n  当前目录: {Path.cwd()}")
         print(f"  期望目录: {SCRIPT_DIR}")
         sys.exit(1)
