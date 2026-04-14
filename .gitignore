@@ -29,28 +29,17 @@ env/
 # SHG internal workspace (digital team files)
 .shg-team/
 
-# Environment variables
-.env
-*.env
+# WorkBuddy workspace
+.codebuddy/
+.workbuddy/
 
 # Generated reports
 reports/
 
-# Logs
-*.log
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-
 # Testing
 .pytest_cache/
 .coverage
+.coverage-report.json
+.test-results.json
+.test-results.xml
 htmlcov/

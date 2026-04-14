@@ -3,7 +3,6 @@ test_scanner.py — SkillsScanner 核心逻辑单元测试
 覆盖：扫描发现、依赖提取、健康评分算法、边界情况、冲突检测
 """
 
-import pytest
 from pathlib import Path
 
 # 将 scripts 目录加入 sys.path，以便导入被测模块

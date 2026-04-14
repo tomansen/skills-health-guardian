@@ -51,20 +51,48 @@ Think of it as a **health check doctor for your AI agent skill ecosystem**. One 
 
 ## Quick Start
 
+### ⚠️ Installation Notes
+
+- **No PyPI release yet** — Use git clone (see below)
+- **Python 3.12+ required** — See [Troubleshooting](docs/TROUBLESHOOTING.md) if you need to upgrade
+
 ### Prerequisites
 
-- Python 3.12 or higher
-- No external dependencies required (stdlib only)
+| Requirement | Version | Check Command |
+|-------------|---------|---------------|
+| Python | 3.12 or higher | `python3 --version` |
+| Git | Any | `git --version` |
+
+> **How to upgrade Python**:
+> - **macOS**: `brew install python@3.12`
+> - **Linux (Ubuntu)**: `sudo apt install python3.12`
+> - **Windows**: Download from [python.org](https://www.python.org/downloads/)
 
 ### Install
 
 ```bash
 # Clone the repository
-git clone https://github.com/WorkBuddy-AI/skills-health-guardian.git
-cd skills-health-guardian
+git clone https://github.com/tomansen/skills-health-guardian.git
+cd skills-health-guardian  # ← Important: change into the project directory
 
-# Run directly (no installation needed)
-python scripts/scanner.py --help
+# Verify directory structure
+ls scripts/  # Should see: scanner.py, reporter.py, fixer.py, health-check.sh, cli.py
+
+# Run directly (no pip installation needed)
+python3 scripts/scanner.py --help
+```
+
+### Run with Script (recommended)
+
+```bash
+# Give execute permission on macOS/Linux
+chmod +x scripts/health-check.sh
+
+# Run the health check
+./scripts/health-check.sh
+
+# Or with python directly (no permission needed)
+python3 scripts/health-check.sh
 ```
 
 ### Scan Your Skills

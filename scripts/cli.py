@@ -89,7 +89,10 @@ def format_table(scanner: SkillsScanner, verbose: bool = False) -> str:
 
     lines.append("╔" + "═" * (box_width - 2) + "╗")
     # 居中标题
-    title_padding = (box_width - 2 - len(title.encode('gbk')) // 2 * 2 - len(title)) // 2  # rough center
+    try:
+        title_padding = (box_width - 2 - len(title.encode('gbk')) // 2 * 2 - len(title)) // 2  # rough center
+    except (UnicodeEncodeError, LookupError):
+        title_padding = 4  # GBK 不支持 emoji 时使用默认内边距
     lines.append("║" + " " * max(4, title_padding) + title + " " * max(4, box_width - 2 - max(4, title_padding) - len(title) - 1) + "║")
     lines.append("╠" + "═" * (box_width - 2) + "╣")
 
@@ -331,6 +334,21 @@ def run_watch_mode(args):
 # ════════════════════════════════════════════════════════
 
 def main():
+    # ── 自动查找 scripts 目录 ──
+    SCRIPT_DIR = Path(__file__).resolve().parent
+    
+    # 检查是否有必要的文件
+    if not (SCRIPT_DIR / "scanner.py").exists():
+        print(f"\n{'='*60}")
+        print(f"  ❌ 错误: 找不到 scripts 目录")
+        print(f"{'='*60}")
+        print(f"\n  💡 请确保在项目根目录运行此命令:")
+        print(f"     $ cd skills-health-guardian")
+        print(f"     $ python3 scripts/cli.py --help")
+        print(f"\n  当前目录: {Path.cwd()}")
+        print(f"  期望目录: {SCRIPT_DIR}")
+        sys.exit(1)
+
     default_skills_path = str(Path.home() / ".workbuddy" / "skills")
 
     parser = argparse.ArgumentParser(
